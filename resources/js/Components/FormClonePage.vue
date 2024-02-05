@@ -1,28 +1,39 @@
 <script setup>
 import { ref } from "vue";
+import { router } from "@inertiajs/vue3";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const url = ref("https://my.copyblogger.com/");
+
+function clone() {
+    router.post(
+        route("cloned-page.store"),
+        { url: url.value },
+        {
+            onFinish: () => {
+                console.log("onFinish");
+            },
+        }
+    );
+}
 </script>
 
 <template>
-    <form @click="clone">
-        <label class="w-full form-control">
-            <div class="flex items-center space-x-3">
-                <input
-                    type="text"
-                    placeholder="Digite a url da página a ser clonada"
-                    class="w-full input input-bordered"
-                    v-model="url"
-                />
+    <form @submit.prevent="clone">
+        <div class="flex items-center space-x-3">
+            <Input
+                type="text"
+                placeholder="Digite o endereço do site"
+                v-model="url"
+            />
 
-                <button class="btn btn-info">Clonar</button>
-            </div>
+            <Button class="btn btn-info">Clonar</Button>
+        </div>
 
-            <div class="label">
-                <span class="label-text-alt"
-                    >A url deve começar com http:// ou https://</span
-                >
-            </div>
-        </label>
+        <Label class="mt-3 block">
+            A url deve começar com http:// ou https://
+        </Label>
     </form>
 </template>

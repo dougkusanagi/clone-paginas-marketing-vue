@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClonedPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/clones', [\App\Http\Controllers\ClonedPageController::class, 'store'])->name('clones.store');
+Route::post('/cloned-page', [ClonedPageController::class, 'store'])
+    ->name('cloned-page.store');
 
 require __DIR__ . '/auth.php';
